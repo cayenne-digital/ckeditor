@@ -10,11 +10,11 @@ module Ckeditor
         options = (options || {}).stringify_keys
         ck_options = (options.delete('ckeditor') || {}).stringify_keys
         
-        instance_tag = ActionView::Base::InstanceTag.new(object_name, method, self, options.delete('object'))
+        instance_tag = ActionView::Helpers::Tags::TextArea.new(object_name, method, self, options)
         instance_tag.send(:add_default_name_and_id, options) if options['id'].blank?
         
         output_buffer = ActiveSupport::SafeBuffer.new
-        output_buffer << instance_tag.to_text_area_tag(options)
+        output_buffer << instance_tag.render
         output_buffer << javascript_tag(Utils.js_replace(options['id'], ck_options))
         output_buffer
       end
