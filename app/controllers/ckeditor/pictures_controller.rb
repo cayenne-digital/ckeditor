@@ -1,12 +1,12 @@
 class Ckeditor::PicturesController < Ckeditor::ApplicationController
 
   def index
-    @pictures = Ckeditor.picture_model.find_all(ckeditor_pictures_scope)
-    respond_with(@pictures) 
+    @pictures = Ckeditor.picture_model.find_all(ckeditor_pictures_scope(container: params[:container]))
+    respond_with(@pictures)
   end
   
   def create
-    @picture = Ckeditor::Picture.new
+    @picture = Ckeditor::Picture.new(container: params[:container])
 	  respond_with_asset(@picture)
   end
   
